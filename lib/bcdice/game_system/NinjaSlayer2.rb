@@ -109,11 +109,16 @@ module BCDice
         output_text = ''
         total_success_num = 0
 
-        difficulty = DIFFICULTY_SYMBOL_TO_INTEGER.fetch(match[1])
-        appendix = match[3]
+        command = match[1]
+        appendix = match[2]
+        difficulty = 0
 
-        match[2].split(",").each do |sub_command|
-          dice_num = sub_command.to_i
+        command.split(",").each do |sub_command|
+          /^(UH|[KENHU])?(\d+)$/i.match(sub_command)
+          unless Regexp.last_match[1].nil?
+            difficulty = DIFFICULTY_SYMBOL_TO_INTEGER.fetch(Regexp.last_match[1])
+          end
+          dice_num = Regexp.last_match[2].to_i
 
           # D6バラバラロール
           roll_command = "#{dice_num}B6>=#{difficulty}"
@@ -270,7 +275,7 @@ module BCDice
       RE_COUNT_CRITICAL = /C([1-6])?/i.freeze
       RE_COUNT_JUDGE = /(=|!=|>=|>|<=|<)([1-6])/.freeze
 
-      RE_JUDGE_DICEROLL = /^(UH|[KENHU])([\d,]+)(?:\[((?:(?:S([1-6])?|C([1-6])?|(=|!=|>=|>|<=|<)([1-6]))(?:\]\[)?)+)\])?$/i.freeze
+      RE_JUDGE_DICEROLL = /^((?:(?:UH|[KENHU])?\d+,?)+)(?:\[((?:(?:S([1-6])?|C([1-6])?|(=|!=|>=|>|<=|<)([1-6]))(?:\]\[)?)+)\])?$/i.freeze
       RE_JUDGE_SATZ_BATZ = /^SB(?:@([1-6]))?$/i.freeze
       RE_JUDGE_WASSHOI = /^WS([1-9]|10|11|12)$/i.freeze
       RE_JUDGE_WASSHOI_ENTRY = /^WSE(?:@([1-6]))?$/i.freeze

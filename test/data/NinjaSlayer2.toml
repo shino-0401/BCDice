@@ -68,11 +68,42 @@ rands = [
   { sides = 6, value = 5 },
 ]
 
+# 同一難易度での複数ダイス同時ロール
+[[ test ]]
+game_system = "NinjaSlayer2"
+input = "U2,3"
+output = "(2B6>=6) ＞ 4,2 ＞ 成功数:0 \n(3B6>=6) ＞ 3,1,6 ＞ 成功数:1 \n"
+success = true
+rands = [
+  { sides = 6, value = 4 },
+  { sides = 6, value = 2 },
+  { sides = 6, value = 3 },
+  { sides = 6, value = 1 },
+  { sides = 6, value = 6 },
+]
+
+# 異なる難易度での複数ダイス同時ロール
+[[ test ]]
+game_system = "NinjaSlayer2"
+input = "N2,3,H2,N1"
+output = "(2B6>=4) ＞ 4,2 ＞ 成功数:1 \n(3B6>=4) ＞ 3,1,6 ＞ 成功数:1 \n(2B6>=5) ＞ 1,5 ＞ 成功数:1 \n(1B6>=4) ＞ 2 ＞ 成功数:0 \n"
+success = true
+rands = [
+  { sides = 6, value = 4 },
+  { sides = 6, value = 2 },
+  { sides = 6, value = 3 },
+  { sides = 6, value = 1 },
+  { sides = 6, value = 6 },
+  { sides = 6, value = 1 },
+  { sides = 6, value = 5 },
+  { sides = 6, value = 2 },
+]
+
 # N{m},{n}[appendix] 簡易コマンドの連続処理 (追加判定)
 [[ test ]]
 game_system = "NinjaSlayer2"
-input = "N5,3,4[!=1][s][c2]"
-output = "(5B6>=4) ＞ 4,6,3,1,5 ＞ 成功数:3, 追加判定:4[6,5,4,3], サツバツ！:1[6], クリティカル！:4[6,5,4,3] \n(3B6>=4) ＞ 1,1,2 ＞ 成功数:0, 追加判定:1[2], サツバツ！:0, クリティカル！:1[2] \n(4B6>=4) ＞ 6,6,1,2 ＞ 成功数:2, 追加判定:3[6,6,2], サツバツ！:2[6,6], クリティカル！:3[6,6,2] \n"
+input = "N5,3,U4[!=1][s][c2]"
+output = "(5B6>=4) ＞ 4,6,3,1,5 ＞ 成功数:3, 追加判定:4[6,5,4,3], サツバツ！:1[6], クリティカル！:4[6,5,4,3] \n(3B6>=4) ＞ 1,1,2 ＞ 成功数:0, 追加判定:1[2], サツバツ！:0, クリティカル！:1[2] \n(4B6>=6) ＞ 6,6,1,2 ＞ 成功数:2, 追加判定:3[6,6,2], サツバツ！:2[6,6], クリティカル！:3[6,6,2] \n"
 success = true
 rands = [
   { sides = 6, value = 4 },
